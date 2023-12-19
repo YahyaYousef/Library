@@ -31,6 +31,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<BookEntity> listBooksByCategoryId(Long categoryId) {
+        Iterable<BookEntity> all = bookRepo.findAllBooksByCategoryId(categoryId);
+        return StreamSupport.stream(all.spliterator(),false).collect(Collectors.toList());
+    }
+
+    @Override
     public Optional<BookEntity> readOneBook(Long id) {
         return bookRepo.findById(id);
     }

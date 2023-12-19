@@ -22,7 +22,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
-import java.util.UUID;
 
 @Transactional
 @Component
@@ -50,8 +49,7 @@ public class UploadProfileImageUseCaseImpl implements UploadProfileImageUseCase 
         if (userById.isEmpty()) {
             throw new NotFoundException("User is not found");
         }
-        UUID imageId = UUID.randomUUID();
-        Path filePath = Paths.get(uploadDir, imageId + "_" + System.currentTimeMillis() + "_" + request.getFile().getOriginalFilename());
+        Path filePath = Paths.get(uploadDir, userById.get().getId() + "_" + System.currentTimeMillis() + "_" + request.getFile().getOriginalFilename());
         createFileIfNotExist(filePath.toFile());
         try {
             Files.copy(request.getFile().getInputStream(), filePath);
@@ -60,16 +58,16 @@ public class UploadProfileImageUseCaseImpl implements UploadProfileImageUseCase 
             throw new GenericException("Error in image saving");
         }
         UsersImage usersImage = UsersImage.builder()
-                .imageId(imageId)
                 .user(userById.get())
+                .imageId(userById.get().getImage())
                 .imagePath(filePath.toAbsolutePath().toString())
                 .build();
 
-        return userMapper.mapTO(userService.updateUserProfileImage(request.getUserId(), imageId, usersImage));
+        return userMapper.mapTO(userService.updateUserProfileImage(request.getUserId(), usersImage));
     }
 
     private void createFileIfNotExist(File file) {
-        if(!file.getParentFile().exists()){
+        if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
     }

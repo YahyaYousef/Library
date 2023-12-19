@@ -16,7 +16,7 @@ public interface UserService {
     Optional<UserEntity> findUserById(UUID id);
     Optional<UserEntity> findUserByUsername(String username);
     Optional<UserEntity> findUserByEmail(String email);
-    UserEntity updateUserProfileImage(UUID userId, UUID imageId,UsersImage usersImage);
+    UserEntity updateUserProfileImage(UUID userId,UsersImage usersImage);
 
     Optional<UsersImage> getProfileImage(UUID imageId);
 

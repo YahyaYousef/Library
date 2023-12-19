@@ -1,6 +1,5 @@
 package com.example.demo.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +32,8 @@ public class UserEntity implements UserDetails {
     private String username;
     private String phone;
     private String password;
+    @JoinColumn(name = "image_id")
+    @Column(unique = true)
     private UUID image;
 
     @Override

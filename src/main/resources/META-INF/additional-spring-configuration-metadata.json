@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "pageSettings.defaultPageNumber",
+      "type": "java.lang.String",
+      "description": "This Key is used to define the default page in pagination list."
+    },
+    {
+      "name": "pageSettings.defaultPageSize",
+      "type": "java.lang.String",
+      "description": "This Key is used to define the default page size in pagination list."
+    }
+  ] }

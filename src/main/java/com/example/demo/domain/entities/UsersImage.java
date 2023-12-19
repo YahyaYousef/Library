@@ -19,15 +19,12 @@ import java.util.UUID;
 public class UsersImage {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID imageId;
 
     @JoinColumn(name = "user_id")
     @ManyToOne(cascade = CascadeType.ALL)
     private UserEntity user;
-
-    @Column(unique = true)
-    private UUID imageId;
 
     private String imagePath;
 

@@ -1,10 +1,7 @@
 package com.example.demo.config.security;
 
-import com.example.demo.domain.entities.UserEntity;
 import com.example.demo.services.AuthenticationService;
-import com.example.demo.services.UserService;
 import jakarta.servlet.ServletException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +14,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {

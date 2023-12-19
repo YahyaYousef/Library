@@ -2,11 +2,12 @@ package com.example.demo.controllers;
 
 import com.example.demo.domain.dto.CategoryDto;
 import com.example.demo.domain.request.CategoryRequestBody;
+import com.example.demo.domain.response.PaginationResponse;
 import com.example.demo.usecaseimpl.category.CreateCategoryUseCaseImpl;
 import com.example.demo.usecaseimpl.category.ListCategoriesByParentIdImpl;
 import com.example.demo.usecaseimpl.category.ListCategoriesUseCaseImpl;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.java.Log;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +29,9 @@ public class CategoryController {
     }
 
     @GetMapping("/categories")
-    public List<CategoryDto> getAllCategories() {
-        return listCategoriesUseCase.execute(null);
+    public PaginationResponse<CategoryDto> getAllCategories(@RequestParam(required = false,defaultValue = "${pageSettings.defaultPageNumber}") int page,
+                                                            @RequestParam(required = false,defaultValue = "${pageSettings.defaultPageSize}") int size) {
+        return listCategoriesUseCase.execute(PageRequest.of(page, size));
     }
 
     @PostMapping("/categories")
@@ -38,7 +40,7 @@ public class CategoryController {
     }
 
     @GetMapping("/categories/parent/{parentId}")
-    public List<CategoryDto> findCategoriesByParentId(@PathVariable Long parentId) throws JsonProcessingException {
+    public List<CategoryDto> findCategoriesByParentId(@PathVariable Long parentId) {
        return listCategoriesByParentId.execute(parentId);
     }
 

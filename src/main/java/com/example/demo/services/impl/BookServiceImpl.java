@@ -3,12 +3,11 @@ package com.example.demo.services.impl;
 import com.example.demo.domain.entities.BookEntity;
 import com.example.demo.repo.BookRepo;
 import com.example.demo.services.BookService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -25,15 +24,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookEntity> readBooks() {
-        Iterable<BookEntity> all = bookRepo.findAll();
-        return StreamSupport.stream(all.spliterator(),false).collect(Collectors.toList());
+    public Page<BookEntity> readBooks(Pageable pageable) {
+        return bookRepo.findAll(pageable);
     }
 
     @Override
-    public List<BookEntity> listBooksByCategoryId(Long categoryId) {
-        Iterable<BookEntity> all = bookRepo.findAllBooksByCategoryId(categoryId);
-        return StreamSupport.stream(all.spliterator(),false).collect(Collectors.toList());
+    public Page<BookEntity> listBooksByCategoryId(Pageable pageable,Long categoryId) {
+        return bookRepo.findAllBooksByCategoryId(pageable,categoryId);
     }
 
     @Override

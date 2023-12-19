@@ -1,15 +1,16 @@
 package com.example.demo.services;
 
 import com.example.demo.domain.entities.BookEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface BookService {
 
     BookEntity addBook(BookEntity book);
-    List<BookEntity> readBooks();
-    List<BookEntity> listBooksByCategoryId(Long categoryId);
+    Page<BookEntity> readBooks(Pageable pageable);
+    Page<BookEntity> listBooksByCategoryId(Pageable pageable,Long categoryId);
     Optional<BookEntity> readOneBook(Long id);
 
 

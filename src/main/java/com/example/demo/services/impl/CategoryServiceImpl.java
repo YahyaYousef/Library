@@ -3,6 +3,8 @@ package com.example.demo.services.impl;
 import com.example.demo.domain.entities.CategoryEntity;
 import com.example.demo.repo.CategoryRepo;
 import com.example.demo.services.CategoryService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,9 +27,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryEntity> readCategories() {
-        Iterable<CategoryEntity> categories = categoryRepo.findAll();
-        return StreamSupport.stream(categories.spliterator(),false).collect(Collectors.toList());
+    public Page<CategoryEntity> readCategories(Pageable pageable) {
+        return categoryRepo.findAll(pageable);
     }
 
     @Override

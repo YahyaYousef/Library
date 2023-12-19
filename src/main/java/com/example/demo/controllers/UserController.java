@@ -3,13 +3,13 @@ package com.example.demo.controllers;
 import com.example.demo.domain.dto.UserDto;
 import com.example.demo.domain.request.ImageUploadRequest;
 import com.example.demo.domain.request.UserRequestBody;
+import com.example.demo.domain.response.PaginationResponse;
 import com.example.demo.usecase.user.*;
 import lombok.extern.java.Log;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -34,8 +34,9 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<UserDto> listAllUsers(){
-        return listUsers.execute(null);
+    public ResponseEntity<PaginationResponse<UserDto>> listAllUsers(@RequestParam(required = false,defaultValue = "${pageSettings.defaultPageNumber}") int page,
+                                                                    @RequestParam(required = false,defaultValue = "${pageSettings.defaultPageSize}") int size){
+        return ResponseEntity.ok(listUsers.execute(PageRequest.of(page,size)));
     }
 
     @PostMapping("/users")

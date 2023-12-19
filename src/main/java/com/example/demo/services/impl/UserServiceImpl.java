@@ -5,13 +5,12 @@ import com.example.demo.domain.entities.UsersImage;
 import com.example.demo.repo.UserImageRepo;
 import com.example.demo.repo.UserRepo;
 import com.example.demo.services.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,9 +29,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserEntity> findAllUsers() {
-        Iterable<UserEntity> allUsers = userRepo.findAll();
-        return StreamSupport.stream(allUsers.spliterator(),false).collect(Collectors.toList());
+    public Page<UserEntity> findAllUsers(Pageable pageable) {
+        return userRepo.findAll(pageable);
     }
 
     @Override

@@ -46,16 +46,15 @@ public class CreateBookUseCaseImpl implements CreateBookUseCase {
         if (categoryById.isEmpty()) {
             throw new NotFoundException("Category not found");
         }
-        BookDto bookDto = convertRequestToBookDTO(book);
-        BookEntity bookEntity = bookMapper.mapFrom(bookDto);
-        bookEntity.setCategory(categoryById.get());
+        BookEntity bookEntity = convertRequestToBookEntity(book,categoryById.get());
         return bookMapper.mapTO(bookService.addBook(bookEntity));
     }
 
-    private BookDto convertRequestToBookDTO(BookRequestBody book) {
-        return BookDto.builder()
+    private BookEntity convertRequestToBookEntity(BookRequestBody book, CategoryEntity categoryEntity) {
+        return BookEntity.builder()
                 .url(book.getUrl())
                 .title(book.getTitle())
+                .category(categoryEntity)
                 .build();
     }
 }

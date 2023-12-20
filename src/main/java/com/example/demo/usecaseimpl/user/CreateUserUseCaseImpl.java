@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Transactional
 @Component
@@ -49,19 +50,34 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
             logger.error("Email is already exist");
             throw new UserAlreadyExistException("Email is already exist");
         }
-        UserDto userDto = convertRequestToDTO(user);
-        UserEntity userToSave = userMapper.mapFrom(userDto);
+        String emailRegex = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})$";
+        boolean isValidEmail = patternMatches(user.getEmail(), emailRegex);
+        if(!isValidEmail){
+            throw new InvalidRequestException("Email is invalid");
+        }
+        String numberRegex= "^\\d{10}$";
+        boolean isValidNumber = patternMatches(user.getPhone(), numberRegex);
+        if(!isValidNumber){
+            throw new InvalidRequestException("Phone number is invalid");
+        }
+        UserEntity userToSave = convertRequestToEntity(user);
         userToSave.setPassword(passwordEncoder.encode(user.getPassword()));
         UserEntity userEntity = userService.createUser(userToSave);
         return userMapper.mapTO(userEntity);
     }
 
-    private UserDto convertRequestToDTO(UserRequestBody user) {
-        return UserDto.builder()
+    private UserEntity convertRequestToEntity(UserRequestBody user) {
+        return UserEntity.builder()
                 .phone(user.getPhone())
                 .email(user.getEmail())
                 .username(user.getUsername())
                 .fullName(user.getFullName())
                 .build();
+    }
+
+    public boolean patternMatches(String field, String regexPattern) {
+        return Pattern.compile(regexPattern)
+                .matcher(field)
+                .matches();
     }
 }

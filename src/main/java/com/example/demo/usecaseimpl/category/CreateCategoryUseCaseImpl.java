@@ -30,7 +30,7 @@ public class CreateCategoryUseCaseImpl implements UseCase<CategoryRequestBody, C
         if (category.getTitle() == null) {
             throw new InvalidRequestException("Title can not be empty");
         }
-        CategoryDto categoryDto = CategoryDto.builder()
+        CategoryEntity categoryEntity = CategoryEntity.builder()
                 .title(category.getTitle())
                 .build();
         //Fill parent category
@@ -39,8 +39,8 @@ public class CreateCategoryUseCaseImpl implements UseCase<CategoryRequestBody, C
             if (parentCategory.isEmpty()) {
                 throw new NotFoundException("Parent Not Found");
             }
-            categoryDto.setParent(categoryMapper.mapTO(parentCategory.get()));
+            categoryEntity.setParent(parentCategory.get());
         }
-        return categoryMapper.mapTO(categoryService.addCategory(categoryMapper.mapFrom(categoryDto)));
+        return categoryMapper.mapTO(categoryService.addCategory(categoryEntity));
     }
 }

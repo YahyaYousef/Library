@@ -3,7 +3,7 @@ package com.example.demo.usecaseimpl.category;
 import com.example.demo.customexception.InvalidRequestException;
 import com.example.demo.domain.dto.CategoryDto;
 import com.example.demo.domain.entities.CategoryEntity;
-import com.example.demo.mapper.Mapper;
+import com.example.demo.mapper.impl.CategoryMapperImpl;
 import com.example.demo.services.CategoryService;
 import com.example.demo.usecase.UseCase;
 import jakarta.transaction.Transactional;
@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 public class ListCategoriesByParentIdImpl implements UseCase<Long, List<CategoryDto>> {
 
     private final CategoryService categoryService;
-    private final Mapper<CategoryEntity, CategoryDto> categoryMapper;
+    private final CategoryMapperImpl categoryMapper;
 
-    public ListCategoriesByParentIdImpl(CategoryService categoryService, Mapper<CategoryEntity, CategoryDto> categoryMapper) {
+    public ListCategoriesByParentIdImpl(CategoryService categoryService, CategoryMapperImpl categoryMapper) {
         this.categoryService = categoryService;
         this.categoryMapper = categoryMapper;
     }

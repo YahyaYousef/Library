@@ -5,7 +5,7 @@ import com.example.demo.domain.dto.BookDto;
 import com.example.demo.domain.entities.BookEntity;
 import com.example.demo.domain.request.BooksListRequest;
 import com.example.demo.domain.response.PaginationResponse;
-import com.example.demo.mapper.Mapper;
+import com.example.demo.mapper.impl.BookMapperImpl;
 import com.example.demo.services.BookService;
 import com.example.demo.usecase.books.ListBooksUseCase;
 import jakarta.transaction.Transactional;
@@ -18,11 +18,11 @@ import org.springframework.stereotype.Component;
 public class ListBooksUseCaseImpl implements ListBooksUseCase {
 
     private final BookService bookService;
-    private final Mapper<BookEntity,BookDto> bookMapper;
+    private final BookMapperImpl bookMapper;
 
     private final PageMapper<BookDto> bookDtoPageMapper;
 
-    public ListBooksUseCaseImpl(BookService bookService, Mapper<BookEntity, BookDto> bookMapper, PageMapper<BookDto> bookDtoPageMapper) {
+    public ListBooksUseCaseImpl(BookService bookService, BookMapperImpl bookMapper, PageMapper<BookDto> bookDtoPageMapper) {
         this.bookService = bookService;
         this.bookMapper = bookMapper;
         this.bookDtoPageMapper = bookDtoPageMapper;

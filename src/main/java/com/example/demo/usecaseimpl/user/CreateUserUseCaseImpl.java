@@ -5,7 +5,7 @@ import com.example.demo.customexception.user.UserAlreadyExistException;
 import com.example.demo.domain.dto.UserDto;
 import com.example.demo.domain.entities.UserEntity;
 import com.example.demo.domain.request.UserRequestBody;
-import com.example.demo.mapper.Mapper;
+import com.example.demo.mapper.impl.UserMapperImpl;
 import com.example.demo.services.UserService;
 import com.example.demo.usecase.user.CreateUserUseCase;
 import jakarta.transaction.Transactional;
@@ -23,12 +23,12 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
 
     private static final Logger logger = LoggerFactory.getLogger(CreateUserUseCaseImpl.class);
     private final UserService userService;
-    private final Mapper<UserEntity,UserDto> userMapper;
+    private final UserMapperImpl userMapper;
 
     private final PasswordEncoder passwordEncoder;
 
 
-    public CreateUserUseCaseImpl(UserService userService, Mapper<UserEntity, UserDto> userMapper, PasswordEncoder passwordEncoder) {
+    public CreateUserUseCaseImpl(UserService userService, UserMapperImpl userMapper, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;

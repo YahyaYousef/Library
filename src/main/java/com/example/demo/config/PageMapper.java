@@ -2,10 +2,10 @@ package com.example.demo.config;
 
 import com.example.demo.domain.response.PaginationResponse;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 
-@Service
+@Component
 public class PageMapper<T> {
 
     public PaginationResponse<T> convert(Page<T> page){

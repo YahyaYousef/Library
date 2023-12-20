@@ -5,7 +5,7 @@ import com.example.demo.customexception.NotFoundException;
 import com.example.demo.domain.dto.CategoryDto;
 import com.example.demo.domain.entities.CategoryEntity;
 import com.example.demo.domain.request.CategoryRequestBody;
-import com.example.demo.mapper.Mapper;
+import com.example.demo.mapper.impl.CategoryMapperImpl;
 import com.example.demo.services.CategoryService;
 import com.example.demo.usecase.UseCase;
 import jakarta.transaction.Transactional;
@@ -18,9 +18,9 @@ import java.util.Optional;
 public class CreateCategoryUseCaseImpl implements UseCase<CategoryRequestBody, CategoryDto> {
 
     private final CategoryService categoryService;
-    private final Mapper<CategoryEntity, CategoryDto> categoryMapper;
+    private final CategoryMapperImpl categoryMapper;
 
-    public CreateCategoryUseCaseImpl(CategoryService categoryService, Mapper<CategoryEntity, CategoryDto> categoryMapper) {
+    public CreateCategoryUseCaseImpl(CategoryService categoryService, CategoryMapperImpl categoryMapper) {
         this.categoryService = categoryService;
         this.categoryMapper = categoryMapper;
     }

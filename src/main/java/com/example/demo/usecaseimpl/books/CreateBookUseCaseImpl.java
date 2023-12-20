@@ -6,7 +6,7 @@ import com.example.demo.domain.dto.BookDto;
 import com.example.demo.domain.entities.BookEntity;
 import com.example.demo.domain.entities.CategoryEntity;
 import com.example.demo.domain.request.BookRequestBody;
-import com.example.demo.mapper.Mapper;
+import com.example.demo.mapper.impl.BookMapperImpl;
 import com.example.demo.services.BookService;
 import com.example.demo.services.CategoryService;
 import com.example.demo.usecase.books.CreateBookUseCase;
@@ -21,9 +21,9 @@ public class CreateBookUseCaseImpl implements CreateBookUseCase {
 
     private final BookService bookService;
     private final CategoryService categoryService;
-    private final Mapper<BookEntity, BookDto> bookMapper;
+    private final BookMapperImpl bookMapper;
 
-    public CreateBookUseCaseImpl(BookService bookService, CategoryService categoryService, Mapper<BookEntity, BookDto> bookMapper) {
+    public CreateBookUseCaseImpl(BookService bookService, CategoryService categoryService, BookMapperImpl bookMapper) {
         this.bookService = bookService;
         this.categoryService = categoryService;
         this.bookMapper = bookMapper;
